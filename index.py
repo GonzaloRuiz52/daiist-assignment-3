@@ -233,6 +233,8 @@ def chunk_structure(blocks: list[Block], max_words: int) -> list[tuple[str, str,
         merged.append([location, heading, carry + paragraphs]); carry = []
     if carry and merged:
         merged[-1][2] += carry
+    elif carry:  # a short document where every unit is under 30 words: keep it as one unit
+        merged.append([units[0][0], units[0][1], carry])
     units = merged
     out = []
     for location, heading, paragraphs in units:
